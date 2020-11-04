@@ -52,7 +52,7 @@
     UIColor *_bgColor;
     NSInteger *_numberOfPages;
     CGSize _PDFSize;
-    UIWebView *_webView;
+    WKWebView *_webView;
     float _paddingBottom;
     float _paddingTop;
     float _paddingLeft;
@@ -73,8 +73,8 @@ RCT_EXPORT_MODULE();
 - (instancetype)init
 {
     if (self = [super init]) {
-        _webView = [[UIWebView alloc] initWithFrame:self.bounds];
-        _webView.delegate = self;
+        _webView = [[WKWebView alloc] initWithFrame:self.bounds];
+        _webView.navigationDelegate = self;
         [self addSubview:_webView];
         autoHeight = false;
     }
@@ -181,7 +181,7 @@ RCT_EXPORT_METHOD(convert:(NSDictionary *)options
 
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)awebView
+-(void)webView:(WKWebView *)awebView didFinishNavigation:(WKNavigation *)navigation
 {
     if (awebView.isLoading)
         return;
